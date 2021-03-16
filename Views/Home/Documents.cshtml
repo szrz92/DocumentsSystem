@@ -1,0 +1,47 @@
+﻿@model IEnumerable<DocumentManagement.Models.Document>
+@{
+    ViewData["Title"] = "Documents";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+    .table-striped tbody tr:nth-of-type(2n+1) {
+        background-color: #ecf3f9 !important;
+    }
+
+    .table-striped tbody tr:nth-of-type(2n) {
+        background-color: #f5f9fc !important;
+    }
+</style>
+
+<div class="card">
+    <div class="card-header">
+        Uploaded Documents
+    </div>
+    <div class="card-body">
+        <table id="dataTable" class="table table-striped table-borderless pt-2">
+            <thead style="background-color: #0867b3;">
+                <tr class="text-white">
+                    <th>File Id</th>
+                    <th>Name</th>
+                    <th>Uploaded by party</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (Document detail in Model)
+                {
+                    <tr>
+                        <td class="align-middle">@detail.Party_ID</td>
+                        <td class="align-middle">@detail.Name</td>
+                        <td class="align-middle">@detail.User_ID</td>
+                        <td class="align-middle">@Html.ActionLink("View", "PdfViewer", "Home", new { id = detail.Party_ID }, null)</td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>

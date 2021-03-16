@@ -1,0 +1,20 @@
+﻿@model DocumentManagement.Models.ViewModels.DocumentViewModel
+@{
+    ViewData["Title"] = "Privacy Policy";
+}
+<h1>@ViewData["Title"]</h1>
+
+<link href="~/lib/dropzone-5.7.0/dropzone-5.7.0/dist/min/basic.min.css" rel="stylesheet" />
+<link href="~/lib/dropzone-5.7.0/dropzone-5.7.0/dist/min/dropzone.min.css" rel="stylesheet" />
+
+@*<form asp-controller="Admin" asp-action="Upload" method="post"
+    class="dropzone"
+    id="my-awesome-dropzone"></form>*@
+<form asp-controller="Home" asp-action="Upload" method="post" class="dropzone" enctype = "multipart/form-data">
+    <div class="fallback">
+        <input name="doc" type="file" multiple />
+    </div>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="~/lib/dropzone-5.7.0/dropzone-5.7.0/dist/min/dropzone.min.js"></script>

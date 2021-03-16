@@ -1,0 +1,78 @@
+﻿@model DocumentManagement.Models.Utilities.ExplorerModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<form asp-controller="Admin" asp-action="UploadIt" asp-antiforgery="true"
+      class="dropzone" id="UploadForm" enctype="multipart/form-data" style="border:none; color:white;height:100%">
+    <div class="row">
+        <div class="col-9">
+            <div class="card m-3" style="">
+                <div class="card-header bg-primary container-fluid">
+                    <div class="row">
+                        <div class="col-md-9 text-white">
+                            <h5 class=" text-white">
+                                <i class="fa fa-folder "></i>
+                                @Model.FolderName.Replace("/", "")
+                            </h5>
+                        </div>
+                        <div class="col-md-3 float-right">
+                            <a href="@Url.Action("Index", "Explorer")" class="btn btn-small btn-primary ml-3">
+                                <i class="ace-icon fa fa-home "></i>
+                                Home
+                            </a>
+                            <a href="@Url.Action("Index", "Explorer", new { path = Model.ParentURL })" class="btn btn-small btn-primary ml-3">
+                                <i class="ace-icon fa fa-arrow-left "></i>
+                                Back
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">@Model.ParentFolderName</h5>
+
+                    <div class="row">
+                        @foreach (var item in Model.DirModelList)
+                        {
+                            <div class="col-md-2 category-responsive">
+                                <a href="@Url.Action("Index", "Explorer", new { path = item.CurrentPath.Split("wwwroot")[1] })" class="category-wrap">
+                                    <div class="category-block">
+                                        <i class="fa fa-folder category-img" style="font-size: 3.5em;" aria-hidden="true"></i>
+                                        <h6>
+                                            @item.DirName
+                                        </h6>
+                                    </div>
+                                </a>
+                            </div>
+                        }
+
+                        @foreach (var item in Model.FileModelList)
+                        {
+                            <div class="col-md-2 category-responsive">
+                                <a href="@item.CurrentPath" class="category-wrap">
+                                    <div class="category-block">
+                                        <i class="fa fa-file category-img" style="font-size: 3.5em;" aria-hidden="true"></i>
+                                        <h6>
+                                            @item.FileName
+                                        </h6>
+                                    </div>
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-3">
+            
+        </div>
+    </div>
+
+</form>
+@section Scripts
+{
+    <script>
+
+    </script>
+}

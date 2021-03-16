@@ -1,0 +1,182 @@
+﻿@model DocumentManagement.Models.ViewModels.DocumentViewModel
+@{
+    //Department Shared
+    ViewData["Title"] = "Shared";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .table-striped tbody tr:nth-of-type(2n+1) {
+        background-color: #ecf3f9 !important;
+    }
+
+    .table-striped tbody tr:nth-of-type(2n) {
+        background-color: #f5f9fc !important;
+    }
+</style>
+
+<div class="row px-3 px-md-5 pb-4 mb-4 company" id="main-content">
+
+    <h5 class="text-primary font-weight-bold text-capitalize"></h5>
+
+    <div class="col-12 px-0">
+
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+            <li class="nav-item">
+                <a class="nav-link active" id="view-tab" data-toggle="tab" href="#view" role="tab" aria-controls="view" aria-selected="true">View Documents</a>
+            </li>
+
+        </ul>
+
+        <div class="tab-content mt-3" id="myTabContent">
+
+            <div class="tab-pane fade show active shadow" id="view" role="tabpanel" aria-labelledby="view-tab">
+                <div class="row px-2">
+                    <div class="col-12 px-4 py-3 mb-3">
+
+                        <div class="row">
+
+                            <div class="col-6">
+                                <h5>View All Documents</h5>
+                            </div>
+
+
+                            <div class="col-6 text-right">
+                            </div>
+                        </div>
+
+                        @if (TempData["Success"] != null)
+                        {
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="alert alert-success" role="alert">
+                                        @TempData["Success"]
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @if (TempData["Failure"] != null)
+                        {
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="alert alert-warning" role="alert">
+                                        @TempData["Failure"]
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+
+                        <table id="dataTable" class="table table-striped table-borderless pt-2">
+                            <thead style="background-color:black;">
+                                <tr class="text-white">
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Shared by</th>
+                                    <th>View</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (DocumentManagement.Models.ViewModels.DocumentDetail detail in Model.DocumentDetails)
+                                {
+                                    <tr>
+                                        <td class="align-middle">@detail.ID</td>
+                                        <td class="align-middle">@detail.Name</td>
+                                        <td class="align-middle">@detail.UploadedBy</td>
+                                        @if (detail.FileType == ".txt")
+                                        {
+                                            <td class="align-middle"><a class="btn btn-outline-dark" href="http://dms.jointintelgroup.com/@detail.DisplayPath" download>Download</a></td>
+                                        }
+                                        else
+                              if (detail.FileType == ".pdf")
+                                        {
+                                            <td class="align-middle"><a class="btn btn-outline-dark" href="http://dms.jointintelgroup.com/@detail.DisplayPath" target="_blank">View</a></td>
+                                        }
+                                        else
+                                   if (detail.FileType == ".jpeg" || detail.FileType == ".jpg" || detail.FileType == ".png")
+                                        {
+                                            <td class="align-middle"><a class="btn btn-outline-dark" href="http://dms.jointintelgroup.com/@detail.DisplayPath" target="_blank">View</a></td>
+                                        }
+                                        else
+                              if (detail.FileType == ".docx" || detail.FileType == ".docm" || detail.FileType == ".dotm" || detail.FileType == ".dotx")
+                                        {
+                                            <td class="align-middle"><a class="btn btn-outline-dark" href="https://view.officeapps.live.com/op/embed.aspx?src=http://dms.jointintelgroup.com/@detail.DisplayPath" target="_blank">View</a></td>
+                                        }
+                                        else
+                              if (detail.FileType == ".xlsx" || detail.FileType == ".xlsb" || detail.FileType == ".xls" || detail.FileType == ".xlsm")
+                                        {
+                                            <td class="align-middle"><a class="btn btn-outline-dark" href="https://view.officeapps.live.com/op/embed.aspx?src=http://dms.jointintelgroup.com/@detail.DisplayPath" target="_blank">View</a></td>
+                                        }
+                                        else
+                              if (detail.FileType == ".pptx" || detail.FileType == ".ppsx" || detail.FileType == ".ppt" || detail.FileType == ".pps" || detail.FileType == ".pptm" || detail.FileType == ".potm" || detail.FileType == ".ppam" || detail.FileType == ".potx" || detail.FileType == ".ppsm")
+                                        {
+                                            <td class="align-middle"><a class="btn btn-outline-dark" href="https://view.officeapps.live.com/op/embed.aspx?src=http://dms.jointintelgroup.com/@detail.DisplayPath" target="_blank">View</a></td>
+                                        }
+                                        else
+                                        {
+                                            <td class="align-middle"><a class="btn btn-outline-dark" href="https://docs.google.com/gview?url=http://dms.jointintelgroup.com/@detail.DisplayPath" target="_blank">View</a></td>
+                                        }
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+
+        function OnSubmitClick() {
+            // Initialize form validation on the registration form.
+            // It has the name attribute "registration"
+            $("form[name='AddCompanyForm']").validate({
+                // Specify validation rules
+                rules: {
+                    // The key name on the left side is the name attribute
+                    // of an input field. Validation rules are defined
+                    // on the right side
+                    Name: "required",
+                    PhoneNo: {
+                        //required: true,
+                        number: true
+                    },
+                    //Address: "required",
+                    Email: {
+                        //required: true,
+                        // Specify that email should be validated
+                        // by the built-in "email" rule
+                        email: true
+                    },
+                },
+                // Specify validation error messages
+                messages: {
+                    Name: "Please enter company name",
+                    PhoneNo: "Please enter valid number",
+                    //Address: "Please enter company name",
+                    Email: "Please enter correct email",
+                },
+                // Make sure the form is submitted to the destination defined
+                // in the "action" attribute of the form when valid
+                submitHandler: function (form) {
+                    form.submit();
+                }
+            });
+            var $form = $("form[name='AddCompanyForm']");
+            if (!$form.valid()) { return false; }
+        }
+    </script>
+}

@@ -1,0 +1,172 @@
+﻿@model DocumentManagement.Models.ViewModels.ShareViewModel
+@{
+    //Employee Share
+    ViewData["Title"] = "Share";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .table-striped tbody tr:nth-of-type(2n+1) {
+        background-color: #ecf3f9 !important;
+    }
+
+    .table-striped tbody tr:nth-of-type(2n) {
+        background-color: #f5f9fc !important;
+    }
+</style>
+
+<div class="row px-3 px-md-5 pb-4 mb-4 company" id="main-content">
+
+    <h5 class="text-primary font-weight-bold text-capitalize"></h5>
+
+    <div class="col-12 px-0">
+
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+            <li class="nav-item">
+                <a class="nav-link active" id="view-tab" data-toggle="tab" href="#view" role="tab" aria-controls="view" aria-selected="true">Share</a>
+            </li>
+
+
+        </ul>
+
+        <div class="tab-content mt-3" id="myTabContent">
+
+            <div class="tab-pane fade show active shadow" id="view" role="tabpanel" aria-labelledby="view-tab">
+                <div class="row px-2">
+                    <div class="col-12 px-4 py-3 mb-3">
+
+                        <div class="row">
+
+                            <div class="col-6">
+                                <h5>Share a document</h5>
+                            </div>
+
+
+                            <div class="col-6 text-right">
+
+                            </div>
+                        </div>
+
+                        @if (TempData["Success"] != null)
+                        {
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="alert alert-success" role="alert">
+                                        @TempData["Success"]
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @if (TempData["Failure"] != null)
+                        {
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="alert alert-warning" role="alert">
+                                        @TempData["Failure"]
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+
+                        @using (Html.BeginForm("Share", "Employee", FormMethod.Post, new { @class = "col-11 col-md-8 text-center", @name = "AllocateDeviceForm" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true)
+                            if (@ViewBag.Message != null)
+                            {
+                                <div style="border:1px solid red">
+                                    @ViewBag.Message
+                                </div>
+                            }
+                            @Html.ValidationMessageFor(a => a.Doc)
+                            <br />
+
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Document</label>
+                                <div class="col-sm-9">
+                                    <select asp-for="Doc" asp-items="Model.MyDocuments" class="form-control">
+                                        <option value="">None</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Share to</label>
+                                <div class="col-sm-9">
+                                    <select asp-for="To" asp-items="Model.ShareTos" class="form-control">
+                                        <option value="">None</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row mt-3">
+                                <label class="col-sm-3"></label>
+                                <div class="col-sm-9">
+                                    <button class="btn btn-dark text-capitalize float-right" onclick="OnAllocateClick()">Share</button>
+                                </div>
+                            </div>
+                        }
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+
+        $("#Doc").select2({
+            tags: true,
+            width: '100%'
+        });
+        $("#To").select2({
+            tags: true,
+            width: '100%'
+        });
+        function OnSubmitClick() {
+            // Initialize form validation on the registration form.
+            // It has the name attribute "registration"
+            $("form[name='AddCompanyForm']").validate({
+                // Specify validation rules
+                rules: {
+                    // The key name on the left side is the name attribute
+                    // of an input field. Validation rules are defined
+                    // on the right side
+                    Name: "required",
+                    PhoneNo: {
+                        //required: true,
+                        number: true
+                    },
+                    //Address: "required",
+                    Email: {
+                        //required: true,
+                        // Specify that email should be validated
+                        // by the built-in "email" rule
+                        email: true
+                    },
+                },
+                // Specify validation error messages
+                messages: {
+                    Name: "Please enter company name",
+                    PhoneNo: "Please enter valid number",
+                    //Address: "Please enter company name",
+                    Email: "Please enter correct email",
+                },
+                // Make sure the form is submitted to the destination defined
+                // in the "action" attribute of the form when valid
+                submitHandler: function (form) {
+                    form.submit();
+                }
+            });
+            var $form = $("form[name='AddCompanyForm']");
+            if (!$form.valid()) { return false; }
+        }
+    </script>
+}

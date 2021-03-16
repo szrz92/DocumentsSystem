@@ -1,0 +1,540 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - DataWhere</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <link id="bootstrapStyle" rel="stylesheet" href="/css/myBootstrap.css">
+    <link rel="preload" href="/css/bootstrap2.css" as="text/css">
+
+    <link id="mainStyle" href="/css/styleblack.css" rel="stylesheet" type="text/css" />
+    <link href="/css/style2.css" rel="preload" as="text/css" />
+
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.1/plyr.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+
+    <link rel="shortcut icon" href="/img/j2i-logo-favicon.png" type="image/x-icon">
+    <link rel="icon" href="/img/j2i-logo-favicon.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="~/lib/dropzone.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="~/css/context.css" rel="stylesheet" />
+    <style>
+        .ui-draggable .ui-dialog-titlebar {
+            background-color: black;
+            color: white;
+            cursor: move;
+        }
+
+        .select2-container--default .select2-results__option--highlighted[aria-selected] {
+            background-color: black;
+            color: #fff;
+        }
+
+        .select2-container *:focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="loader" style="display:none;">
+        <img style=" position: absolute; left: 35%; top: 25%;" src="~/img/loader.gif" />
+    </div>
+    <div id="wrapper" class="wrapper">
+        <div class="row p-0 m-0">
+            <div class="col-3 col-md-sidebar p-0 m-0">
+                <nav id="sidebar" class="active" style=" background: #000000;">
+                    <ul class="list-unstyled components mb-5">
+                        <li class="position-relative" style=" background-color: #191919;">
+                            <a class="">
+                                <img class="img-fluid img-responsive" src="/img/dwlogo/dwwhitesmall.png" style="height:45px;width:auto;" alt="">
+                                <div class="sidebar-item-text">
+                                </div>
+                            </a>
+                        </li>
+                        <li class="position-relative" height="30px" width="30px">
+                            <a class="py-4">
+                                <div class="sidebar-item-text">
+                                </div>
+                            </a>
+                        </li>
+                        <li class="position-relative">
+                            @if (User.IsInRole("SuperAdmin"))
+                            {
+                                <a class="py-4" asp-controller="Admin" asp-action="Drive">
+                                    <img src="/img/sbicons/drive.png" alt="" height="30px" width="30px">
+                                    <div class="sidebar-item-text">
+                                        <div class="overlay"></div>
+                                        <p class="text-wrap" style="font-size:small">Drive</p>
+                                    </div>
+                                </a>
+                            }
+                            else
+                       if (User.IsInRole("CompanyAdmin"))
+                            {
+                                <a class="py-4" asp-controller="Company" asp-action="Drive">
+                                    <img src="/img/sbicons/drive.png" alt="" height="30px" width="30px">
+                                    <div class="sidebar-item-text">
+                                        <div class="overlay"></div>
+                                        <p class="text-wrap">Drive</p>
+                                    </div>
+                                </a>
+                            }
+                            else
+                          if (User.IsInRole("DepartmentHead"))
+                            {
+                                <a class="py-4" asp-controller="Department" asp-action="Drive">
+                                    <img src="/img/sbicons/drive.png" alt="" height="30px" width="30px">
+                                    <div class="sidebar-item-text">
+                                        <div class="overlay"></div>
+                                        <p class="text-wrap">Drive</p>
+                                    </div>
+                                </a>
+                            }
+                            else
+                          if (User.IsInRole("Employee"))
+                            {
+                                <a class="py-4" asp-controller="Employee" asp-action="Drive">
+                                    <img src="/img/sbicons/drive.png" alt="" height="30px" width="30px">
+                                    <div class="sidebar-item-text">
+                                        <div class="overlay"></div>
+                                        <p class="text-wrap">Drive</p>
+                                    </div>
+                                </a>
+                            }
+                            else
+                            { }
+                        </li>
+                        <li class="position-relative">
+                            @if (User.IsInRole("SuperAdmin"))
+                            {
+                                <a class="py-4" asp-controller="Admin" asp-action="Index">
+                                    <img src="/img/documents.png" alt="" height="30px" width="30px">
+                                    <div class="sidebar-item-text">
+                                        <div class="overlay"></div>
+                                        <p class="text-wrap" style="font-size:small">My Documents</p>
+                                    </div>
+                                </a>
+                            }
+                            else
+                        if (User.IsInRole("CompanyAdmin"))
+                            {
+                                <a class="py-4" asp-controller="Company" asp-action="Index">
+                                    <img src="/img/documents.png" alt="" height="30px" width="30px">
+                                    <div class="sidebar-item-text">
+                                        <div class="overlay"></div>
+                                        <p class="text-wrap">My Documents</p>
+                                    </div>
+                                </a>
+                            }
+                            else
+                           if (User.IsInRole("DepartmentHead"))
+                            {
+                                <a class="py-4" asp-controller="Department" asp-action="Index">
+                                    <img src="/img/documents.png" alt="" height="30px" width="30px">
+                                    <div class="sidebar-item-text">
+                                        <div class="overlay"></div>
+                                        <p class="text-wrap">My Documents</p>
+                                    </div>
+                                </a>
+                            }
+                            else
+                           if (User.IsInRole("Employee"))
+                            {
+                                <a class="py-4" asp-controller="Employee" asp-action="Index">
+                                    <img src="/img/documents.png" alt="" height="30px" width="30px">
+                                    <div class="sidebar-item-text">
+                                        <div class="overlay"></div>
+                                        <p class="text-wrap">My Documents</p>
+                                    </div>
+                                </a>
+                            }
+                            else
+                            { }
+                        </li>
+                        <li class="position-relative">
+                            @if (User.IsInRole("SuperAdmin"))
+                            {
+                                <a class="py-4" asp-controller="Admin" asp-action="Share">
+                                    <img src="/img/share.png" alt="" height="30px" width="30px">
+                                    <div class="sidebar-item-text">
+                                        <div class="overlay"></div>
+                                        <p class="text-wrap">Share</p>
+                                    </div>
+                                </a>
+                            }
+                            else
+                           if (User.IsInRole("CompanyAdmin"))
+                            {
+                                <a class="py-4" asp-controller="Company" asp-action="Share">
+                                    <img src="/img/share.png" alt="" height="30px" width="30px">
+                                    <div class="sidebar-item-text">
+                                        <div class="overlay"></div>
+                                        <p class="text-wrap">Share</p>
+                                    </div>
+                                </a>
+                            }
+                            else
+                           if (User.IsInRole("DepartmentHead"))
+                            {
+                                <a class="py-4" asp-controller="Department" asp-action="Share">
+                                    <img src="/img/share.png" alt="" height="30px" width="30px">
+                                    <div class="sidebar-item-text">
+                                        <div class="overlay"></div>
+                                        <p class="text-wrap">Share</p>
+                                    </div>
+                                </a>
+                            }
+                            else
+                           if (User.IsInRole("Employee"))
+                            {
+                                <a class="py-4" asp-controller="Employee" asp-action="Share">
+                                    <img src="/img/share.png" alt="" height="30px" width="30px">
+                                    <div class="sidebar-item-text">
+                                        <div class="overlay"></div>
+                                        <p class="text-wrap">Share</p>
+                                    </div>
+                                </a>
+                            }
+                            else
+                            { }
+                        </li>
+                        <li class="position-relative">
+                            @if (User.IsInRole("SuperAdmin"))
+                            {
+                                <a class="py-4" asp-controller="Admin" asp-action="Shared">
+                                    <img src="/img/inbox.png" alt="" height="30px" width="30px">
+                                    <div class="sidebar-item-text">
+                                        <div class="overlay"></div>
+                                        <p class="text-wrap">Shared with me</p>
+                                    </div>
+                                </a>
+                            }
+                            else
+                           if (User.IsInRole("CompanyAdmin"))
+                            {
+                                <a class="py-4" asp-controller="Company" asp-action="Shared">
+                                    <img src="/img/inbox.png" alt="" height="30px" width="30px">
+                                    <div class="sidebar-item-text">
+                                        <div class="overlay"></div>
+                                        <p class="text-wrap">Shared with me</p>
+                                    </div>
+                                </a>
+                            }
+                            else
+                           if (User.IsInRole("DepartmentHead"))
+                            {
+                                <a class="py-4" asp-controller="Department" asp-action="Shared">
+                                    <img src="/img/inbox.png" alt="" height="30px" width="30px">
+                                    <div class="sidebar-item-text">
+                                        <div class="overlay"></div>
+                                        <p class="text-wrap">Shared with me</p>
+                                    </div>
+                                </a>
+                            }
+                            else
+if (User.IsInRole("Employee"))
+                            {
+                                <a class="py-4" asp-controller="Employee" asp-action="Shared">
+                                    <img src="/img/inbox.png" alt="" height="30px" width="30px">
+                                    <div class="sidebar-item-text">
+                                        <div class="overlay"></div>
+                                        <p class="text-wrap">Shared with me</p>
+                                    </div>
+                                </a>
+                            }
+                            else
+                            { }
+                        </li>
+                        <li class="position-relative">
+                            @if (User.IsInRole("SuperAdmin"))
+                            {
+                                <a class="py-4" asp-controller="Admin" asp-action="Companies">
+                                    <img src="/img/company.png" alt="" height="30px" width="30px">
+                                    <div class="sidebar-item-text">
+                                        <div class="overlay"></div>
+                                        <p class="text-wrap">Companies</p>
+                                    </div>
+                                </a>
+                            }
+                            else
+if (User.IsInRole("CompanyAdmin"))
+                            {
+                                <a class="py-4" asp-controller="Company" asp-action="Departments">
+                                    <img src="/img/company.png" alt="" height="30px" width="30px">
+                                    <div class="sidebar-item-text">
+                                        <div class="overlay"></div>
+                                        <p class="text-wrap">Departments</p>
+                                    </div>
+                                </a>
+                            }
+                            else
+                            { }
+                        </li>
+                        <li class="position-relative">
+                            @if (User.IsInRole("SuperAdmin"))
+                            {
+                                <a class="py-4" asp-controller="Admin" asp-action="Users">
+                                    <img src="/img/user.png" alt="" height="30px" width="30px">
+                                    <div class="sidebar-item-text">
+                                        <div class="overlay"></div>
+                                        <p class="text-wrap">Users</p>
+                                    </div>
+                                </a>
+                            }
+                            else
+if (User.IsInRole("CompanyAdmin"))
+                            {
+                                <a class="py-4" asp-controller="Company" asp-action="Users">
+                                    <img src="/img/user.png" alt="" height="30px" width="30px">
+                                    <div class="sidebar-item-text">
+                                        <div class="overlay"></div>
+                                        <p class="text-wrap">Users</p>
+                                    </div>
+                                </a>
+                            }
+                            else
+if (User.IsInRole("DepartmentHead"))
+                            {
+                                <a class="py-4" asp-controller="Department" asp-action="Users">
+                                    <img src="/img/user.png" alt="" height="30px" width="30px">
+                                    <div class="sidebar-item-text">
+                                        <div class="overlay"></div>
+                                        <p class="text-wrap">Users</p>
+                                    </div>
+                                </a>
+                            }
+                            else
+                            { }
+                        </li>
+                    </ul>
+
+                </nav>
+            </div>
+
+            <div class="col-9 col-md-content p-0 m-0">
+
+                <!-- Page Content  -->
+                <div id="content" class="p-0 pb-4">
+
+                    <div class="row px-3 m-0 align-items-center">
+
+                        <div class="col-12 col-md-7 pl-2 d-flex  justify-content-center justify-content-md-start">
+                            @*<img src="/img/dwlogo/datawhereblack.png" style=" height: 50px;width:auto;" alt="logo">*@
+                            <p style=" font-family: Segoe UI; font-style: normal; font-weight: bold; font-size: 28px; color: rgba(0, 0, 0, 1);">DOCUMENT MANAGEMENT SYSTEM</p>
+                        </div>
+
+                        <div class="col-12 col-md-5 p-0 m-0 d-flex flex-wrap align-items-center justify-content-center justify-content-md-end">
+
+
+                            <div class="d-inline-block">
+                                <img class="rounded-circle" src="/img/profile.png" width="50px" height="50px" alt="">
+                            </div>
+
+
+                            <div class="d-inline-block ml-2">
+                                <h6 class="mb-0 text-black">Welcome</h6>
+                                <p class="mb-0 d-inline text-black">
+                                    @User.Identity.Name
+                                </p>
+
+                                <div class="dropdown d-inline-block">
+
+                                    <a class="ml-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                        <img src="/img/icons/arrowdownblack.png" alt="">
+
+                                    </a>
+
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" asp-action="Logout" asp-controller="Account">Logout</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <hr class="pt-0 mt-0">
+
+
+                    @RenderBody()
+
+                    <p class="ml-5 mt-3 position-absolute" style="bottom:0;">Powered by: <a href="#"><b><u>DataWhere</u></b></a></p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="/js/popper.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/moment.js"></script>
+    <script src="/js/player.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.js"></script>
+
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+    <script src="/lib/dropzone.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src="~/lib/context/context-menu.js"></script>
+    @*<script src="~/lib/context/context.js"></script>*@
+
+    <script>
+        $(function () {
+            function addFolder() {
+                $('#btnAddFolder').click()
+            }
+
+            var dialog = $("#dialog-form").dialog({
+                autoOpen: false,
+                //height: auto,
+                width: 350,
+                modal: true,
+                buttons: {
+                    "Create a folder": addFolder,
+                    Cancel: function () {
+                        dialog.dialog("close");
+                    }
+                },
+                close: function () {
+                    form[0].reset();
+                }
+            });
+
+            var form = dialog.find("form").on("submit", function (event) {
+                addFolder();
+            });
+
+            $("#add-folder").button().on("click", function () {
+                dialog.dialog("open");
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        var idleTime = 0;
+        $(document).ready(function () {
+            //Increment the idle time counter every minute.
+            var idleInterval = setInterval(timerIncrement, 10000000); // 1 minute
+
+            //Zero the idle timer on mouse movement.
+            $(this).mousemove(function (e) {
+                idleTime = 0;
+            });
+            $(this).keypress(function (e) {
+                idleTime = 0;
+            });
+        });
+
+        function timerIncrement() {
+            idleTime = idleTime + 1;
+            if (idleTime > 10) { // 15 minutes
+                window.location.reload();
+            }
+        }
+    </script>
+    <script>
+
+        function showLoader() {
+            document.getElementById("loader").style.display = "block";
+            document.getElementById("wrapper").style.display = "none";
+        }
+        function showPage() {
+            document.getElementById("loader").style.display = "none";
+            document.getElementById("wrapper").style.display = "block";
+        }
+        Dropzone.options.UploadForm = {
+            maxFiles: 1,
+            maxFilesize: 20, // MB
+            acceptedFiles: ".jpeg, .png, .pdf, .docx, .docm, .dotm, .dotx, .xlsx, .xlsb, .xls, .xlsm, .pptx, .ppsx, .ppt, .pps, .pptm, .potm, .ppam, .potx, .ppsm",
+            addRemoveLinks: true,
+            uploadprogress: function (a, b) {
+                showLoader();
+            },
+            success: function (a, b) {
+                showPage();
+                window.location.reload();
+            },
+            error: function (file, response) {
+                //var obj = JSON.parse(file);
+
+                $(".dz-preview").hide();
+                alert('Cannot upload ' + file.upload.filename);
+                $('.errormsg').text(response);
+                console.log(JSON.stringify(file)); // "Sorry"
+            }
+
+        };
+
+        $('.dropzone').on('click', function () {
+            $('.dz-remove').click();
+        });
+    </script>
+    <script>
+
+
+        $(function () {
+
+            $('#dataTable').DataTable
+                ({
+                    "dom": 'rt<"bottom"lip><"clear">',
+                    "searching": false,
+                    "language":
+                    {
+                        "lengthMenu": "_MENU_ ",
+                        "paginate":
+                        {
+                            "previous": "&laquo;",
+                            "next": "&raquo;"
+                        }
+                    }
+                });
+            $("#dataTable_info").addClass("d-inline-block");
+            $("#dataTable_info").addClass("ml-2");
+            $("#dataTable_length").addClass("d-inline-block");
+            $("#dataTable_paginate").addClass("d-inline-block");
+            $("#dataTable_paginate").addClass("float-right");
+
+            $('.datetimepicker-input').datetimepicker({
+                inline: true,
+                keepOpen: true,
+            });
+
+            $('.customizer-btn').on('click', function () {
+
+                $('.customizer-preview').toggleClass('d-none');
+                $('.customizer-btn-outter').toggleClass('col-2');
+                $('.customizer-btn-outter').toggleClass('p-0');
+            });
+        });
+        function swapStylesheet(sheet, bootstrap) {
+            document.getElementById('mainStyle').setAttribute('href', sheet);
+            document.getElementById('bootstrapStyle').setAttribute('href', bootstrap);
+        }
+    </script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

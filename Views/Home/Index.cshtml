@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@model CreatePost
+    <form asp-action="Create" enctype="multipart/form-data">
+
+        <input asp-for="MyImage" />
+
+        <input type="submit" />
+
+
+        <iframe src="https://docs.google.com/gview?url=50.207.12.106/img/aa.xlsx" width="100%" height="500px">
+        </iframe>
+    </form>
